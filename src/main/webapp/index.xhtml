@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>Test Tree</title>
+</h:head>
+<h:body>
+        <h:form>
+            <p:tree value="#{springManagedBean.treeNode}" var="node"
+                    animate="true" selectionMode="single">
+                <p:treeNode>
+                    <c:choose>
+                        <c:when test="#{node.folder == true}">
+                            <h:outputText value="#{node.name}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <h:link value="#{node.name}"/>
+                        </c:otherwise>
+                    </c:choose>
+                </p:treeNode>
+            </p:tree>
+        </h:form>
+
+</h:body>
+</html>
