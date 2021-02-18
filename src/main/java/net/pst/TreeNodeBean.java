@@ -2,41 +2,30 @@ package net.pst;
 
 import net.pst.models.TreeDto;
 import net.pst.service.ManagedService;
+import org.primefaces.component.tabview.Tab;
+import org.primefaces.component.tabview.TabView;
 import org.primefaces.model.TreeNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.faces.bean.RequestScoped;
+import java.util.List;
 
 
 @Component
 @RequestScoped
-public class SpringManagedBean {
+public class TreeNodeBean {
     private TreeNode treeNode;
-    private String context;
 
     private final ManagedService service;
 
 
     @Autowired
-    public SpringManagedBean(ManagedService service) {
-
+    public TreeNodeBean(ManagedService service) {
         this.service = service;
-
     }
-
-//    @Autowired
-//    public SpringManagedBean(SpringManagedService sms, JsfManagedService jms) {
-//        super("Spring", sms, jms);
-//    }
 
     public TreeNode getTreeNode(){
         return service.getTree();
-    }
-
-    public String getContext(){
-        String str = service.getContext(1);
-        this.context = str;
-        return service.getContext(1);
     }
 }

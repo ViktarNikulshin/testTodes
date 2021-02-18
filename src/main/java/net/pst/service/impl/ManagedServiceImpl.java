@@ -6,6 +6,8 @@ import net.pst.models.ModelDto;
 import net.pst.models.TreeDto;
 import net.pst.proxy.ApiProxy;
 import net.pst.service.ManagedService;
+import org.primefaces.component.tabview.Tab;
+import org.primefaces.component.tabview.TabView;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +32,23 @@ public class ManagedServiceImpl implements ManagedService {
         TreeNode tree = new DefaultTreeNode(getRoot(), null);
         TreeNode child = new DefaultTreeNode(getModel(i), tree);
         child.setParent(tree);
-        initNode(i,child);
+        initNode(i, child);
         return tree;
     }
 
     @Override
-    public String getContext(Integer id) {
+    public Tab getTabView(Integer id) {
+        Tab tab = new Tab();
         Gson gson = new Gson();
         String json = proxy.getById(id);
         ModelDto modelDto = gson.fromJson(json, ModelDto.class);
-        return modelDto.getContent();
+        if (modelDto.getFolder()) {
+            return null;
+        } else {
+            tab.setTitle(modelDto.getName());
+            tab.setAriaLabel(modelDto.getContent());
+            return tab;
+        }
     }
 
     public ModelDto getModel(Integer id) {
@@ -55,17 +64,18 @@ public class ManagedServiceImpl implements ManagedService {
         String json = proxy.getRoot();
         return gson.fromJson(json, ModelDto.class);
     }
-    private void initNode( int i, TreeNode parent){
+
+    private void initNode(int i, TreeNode parent) {
         List<ModelDto> modelDtos = new ArrayList<>();
         Gson gson = new Gson();
         String json = proxy.getChildren(i);
         modelDtos = gson.fromJson(json, new TypeToken<List<ModelDto>>() {
         }.getType());
-        if(modelDtos.size() != 0) {
+        if (modelDtos.size() != 0) {
             for (ModelDto model : modelDtos) {
                 TreeNode treeNode = new DefaultTreeNode(model, parent);
                 treeNode.setParent(parent);
-                initNode(model.getId(),treeNode);
+                initNode(model.getId(), treeNode);
             }
         }
     }

@@ -10,13 +10,14 @@
     <title>Test Tree</title>
 </h:head>
 <h:body>
-        <h:form>
-            <p:tree value="#{springManagedBean.treeNode}" var="node"
+    <h:form id="form" >
+        <h:panelGrid columns="2" columnClasses="menu">
+            <p:tree value="#{treeNodeBean.treeNode}" var="node"
                     animate="true" selectionMode="single">
                 <p:treeNode>
                     <c:choose>
-                        <c:when test="#{node.folder == true}">
-                            <h:outputText value="#{node.name}"/>
+                        <c:when test="#{node.contest eq null}">
+                            <p:commandLink value="#{node.name}" action="#{tabViewBean.add(node.id)}" update=":form:tabs"/>
                         </c:when>
                         <c:otherwise>
                             <h:link value="#{node.name}"/>
@@ -24,7 +25,14 @@
                     </c:choose>
                 </p:treeNode>
             </p:tree>
-        </h:form>
+            <p:tabView id ="tabs" value="#{tabViewBean.tabs}" var="tabItem" style="width:500px;">
+                <p:tab title="#{tabItem.title}" closable="true">
+                    <h:outputText value="#{tabItem.ariaLabel}"/>
+                </p:tab>
+            </p:tabView>
+        </h:panelGrid>
+    </h:form>
+
 
 </h:body>
 </html>
