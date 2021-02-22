@@ -6,10 +6,10 @@
     <groupId>net.pst</groupId>
     <artifactId>testTodes</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>testTodes</name>
-    <description>Test Application for Todes</description>
+    <description>Application for Todes</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
