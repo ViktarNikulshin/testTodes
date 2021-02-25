@@ -14,7 +14,6 @@ import java.util.List;
 @RequestScoped
 public class TabViewBean {
     private List<Tab> tabs;
-
     private final ManagedService service;
 
     @Autowired
